@@ -1,12 +1,12 @@
 #!/usr/bin/python
-# *-* codepage: utf-8 *-*
+# -*- coding: utf-8 -*-
 
 import xml.etree.ElementTree as etree
 
 tree = etree.parse('media.xml')
 root = tree.getroot()
-
-for track in root.findall("./dict/dict/dict/"):
+with open('tmpfile', 'w') as f:
+  for track in root.findall("./dict/dict/dict/"):
 	artist = 0
 	name = 0
 	for node in track:
@@ -18,6 +18,7 @@ for track in root.findall("./dict/dict/dict/"):
 		if node.tag == "key" and node.text == "Artist":
 			artist = 1
 		if node.tag == "string" and artist == 1:
-			print u'%s - %s' % (node.text, nametext)
+			line = u'%s - %s' % (node.text, nametext)
+			print line.encode('utf-8')
 			artist = 0
 
