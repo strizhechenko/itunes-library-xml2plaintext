@@ -29,6 +29,12 @@ get_top() {
 	done | sort -nr | head -$1
 }
 
+get_tail() {
+	while read artist; do
+		echo $(tr '[:upper:]' '[:lower:]' < $FILE | tr -d ' :' | grep -c $artist) $artist
+	done | sort -nr | tail -$1
+}
+
 total_songs() {
 	cat $FILE | wc -l
 }
@@ -49,4 +55,8 @@ echo
 echo "А теперь представим что мы злобные пираты и сидели на раздаче, и пока качали сами - с нас стянули в три раза больше"
 echo "Тогда, по подсчётам копирастичных товарищей мы украли $(( $(total_songs) * 40 )) рублей"
 echo
+echo "Посмотрим на топ 40"
 artists_list_clean | get_top 40
+echo
+echo "Посмотрим и на вещи, встречающиеся у меня в единичном количестве:"
+artists_list_clean | get_tail 40
