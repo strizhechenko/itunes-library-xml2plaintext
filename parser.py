@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# *-* codepage: utf-8 *-*
 
 import xml.etree.ElementTree as etree
 
@@ -17,6 +18,6 @@ for track in root.findall("./dict/dict/dict/"):
 		if node.tag == "key" and node.text == "Artist":
 			artist = 1
 		if node.tag == "string" and artist == 1:
-			print node.text, "-", nametext
+			print u'%s - %s' % (node.text, nametext)
 			artist = 0
 
