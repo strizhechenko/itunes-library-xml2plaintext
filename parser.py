@@ -5,10 +5,9 @@ import xml.etree.ElementTree as etree
 
 tree = etree.parse('media.xml')
 root = tree.getroot()
-with open('tmpfile', 'w') as f:
-  for track in root.findall("./dict/dict/dict/"):
-	artist = 0
-	name = 0
+artist = name = 0
+
+for track in root.findall("./dict/dict/dict/"):
 	for node in track:
 		if node.tag == "key" and node.text == "Name":
 			name = 1
