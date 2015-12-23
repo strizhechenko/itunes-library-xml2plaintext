@@ -80,9 +80,10 @@ def scrobble(track, scrobbler):
     scrobbler.scrobble(artist=track['artist'], title=track['track'], timestamp=str(int(time())))
 
 def scrobble_them(diff):
+    scrobbler = get_scrobbler()
     for track in diff:
         for listen in range(0, diff[track]['count']):
-            scrobble(diff[track], get_scrobbler())
+            scrobble(diff[track], scrobbler)
     return None
 
 
