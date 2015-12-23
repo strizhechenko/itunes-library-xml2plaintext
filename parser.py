@@ -1,22 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+""" Разбирает медиатеку itunes и приводит её к plaintext списку песен """
 
-import xml.etree.ElementTree as etree
+from plistlib import readPlist
 
-tree = etree.parse('media.xml')
-root = tree.getroot()
-artist = name = 0
+have_tags = lambda t: t.get('Artist') and t.get('Name')
+unpack = lambda t: (t['Artist'], t['Name'])
 
-for track in root.findall("./dict/dict/dict/"):
-	if track.tag == "key" and track.text == "Name":
-		name = 1
-	if track.tag == "string" and name == 1:
-		nametext = track.text
-		name = 0
-	if track.tag == "key" and track.text == "Artist":
-		artist = 1
-	if track.tag == "string" and artist == 1:
-		line = u'%s - %s' % (track.text, nametext)
-		print line.encode('utf-8')
-		artist = 0
+tracks = readPlist('media.xml')['Tracks'].values()
 
+for artist, name in map(unpack, filter(have_tags, tracks)):
+    print artist.encode('utf-8'), name.encode('utf-8')
