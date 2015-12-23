@@ -10,4 +10,4 @@ unpack = lambda t: (t['Artist'], t['Name'])
 tracks = readPlist('media.xml')['Tracks'].values()
 
 for artist, name in map(unpack, filter(have_tags, tracks)):
-    print artist.encode('utf-8'), name.encode('utf-8')
+    print artist.encode('utf-8'), '-', name.encode('utf-8')
